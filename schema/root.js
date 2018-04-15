@@ -24,10 +24,12 @@ fields["logs"] = {
     args: {
         activity_id: { type: GraphQLInt },
         date: { type: GraphQLInt },
+        month: { type: GraphQLInt },
+        year: { type: GraphQLInt },
         status: { type: GraphQLString },
         order_by: { type: GraphQLString },
         page: { type: GraphQLInt },
-        offset: { type: GraphQLInt }
+        offset: { type: GraphQLInt },
     },
     resolve(parentValue, arg, context, info) {
         return LogExec.logs(arg, graphqlFields(info));

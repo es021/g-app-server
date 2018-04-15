@@ -27,6 +27,7 @@ const ActivityType = new GraphQLObjectType({
     fields: () => ({
         ID: { type: GraphQLInt },
         name: { type: GraphQLString },
+        icon: { type: GraphQLString },
         weight: { type: GraphQLInt },
         created_at: { type: GraphQLString },
         updated_at: { type: GraphQLString }

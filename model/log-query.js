@@ -12,6 +12,14 @@ class LogExec {
         var activity_where = (typeof params.activity_id === "undefined") ? "1=1" : `activity_id = ${params.activity_id}`;
         var status_where = (typeof params.status === "undefined") ? "1=1" : `status = '${params.status}'`;
 
+        var date_range = "1=1";
+        if (typeof params.month !== "undefined" && typeof params.year !== "undefined") {
+            var date_start = (params.year * 10000) + (params.month * 100);
+            var date_end = date_start + 99;
+            date_range = `date between ${date_start} and ${date_end}`;
+        }
+
+
         var order_by = "ORDER BY " + ((typeof params.order_by === "undefined")
             ? `date desc, activity_id desc`
             : `${params.order_by}`);
@@ -23,6 +31,7 @@ class LogExec {
             and ${date_where} 
             and ${activity_where} 
             and ${status_where} 
+            and ${date_range}
             ${order_by} ${limit}`;
     }
 
@@ -30,15 +39,15 @@ class LogExec {
         const { ActivityExec } = require('./activity-query.js');
 
         var sql = this.getQuery(params);
-        //console.log(sql);
+        console.log(sql);
         var toRet = DB.query(sql).then(function (res) {
 
             for (var i in res) {
-                var activity_id = res[i]["activity_id"];
+                let activity_id = res[i]["activity_id"];
 
                 // activity ****************************************************
                 if (field["activity"]) {
-                    var param = { activity_id: activity_id };
+                    let param = { ID: activity_id };
                     res[i]["activity"] = ActivityExec.activities(param, field["activity"], { single: true });
                 }
             }
