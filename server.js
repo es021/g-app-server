@@ -17,11 +17,11 @@ if (isProd) {
     };
 }
 
-/*
+
 var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
-*/
+
 
 // Express Middleware for serving static files
 app.use(express.static(path.join(__dirname, 'public')));
@@ -34,10 +34,18 @@ app.use(function (req, res, next) {
 });
 
 
+
+// Graphql route
 app.use(root + '/graphql', expressGraphQL({
     schema: schemaCF,
-    graphiql: true //set able to use the graphQL web IDE to true
+    graphiql: (process.env.NODE_ENV === "production") ? false : true //set able to use the graphQL web IDE to true
 }));
+
+
+app.get(root, function (req, res, next) {
+    //console.log("root");
+    res.sendFile(__dirname + '/public/index.html');
+});
 
 app.listen(PORT, () => {
     console.log("React, Redux and GraphQL Server is now running on port " + PORT);
