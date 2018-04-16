@@ -6,6 +6,19 @@ const path = require('path');
 //Use Career Fair Schema
 const schemaCF = require('./schema/_schema.js');
 
+const isProd = (process.env.NODE_ENV === "production");
+
+require('./helper/lib-helper');
+
+
+var root = (isProd) ? "/cf" : "";
+//var root = "";
+if (isProd) {
+    console.log = function (mes) {
+        return;
+    };
+}
+
 /*
 var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // support json encoded bodies
@@ -23,7 +36,7 @@ app.use(function (req, res, next) {
 });
 
 
-app.use('/graphql', expressGraphQL({
+app.use(root + '/graphql', expressGraphQL({
     schema: schemaCF,
     graphiql: true //set able to use the graphQL web IDE to true
 }));
