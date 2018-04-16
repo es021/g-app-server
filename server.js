@@ -8,8 +8,7 @@ const schemaCF = require('./schema/_schema.js');
 
 const isProd = (process.env.NODE_ENV === "production");
 
-
-var root = (isProd) ? "/cf" : "";
+var root = (isProd) ? "/gapp" : "";
 //var root = "";
 if (isProd) {
     console.log = function (mes) {
