@@ -8,8 +8,6 @@ const schemaCF = require('./schema/_schema.js');
 
 const isProd = (process.env.NODE_ENV === "production");
 
-require('./helper/lib-helper');
-
 
 var root = (isProd) ? "/cf" : "";
 //var root = "";
